@@ -1,0 +1,8 @@
+@font-face {
+  font-family:'思源黑体简化';
+  src: url("../fonts/SourceHanSansCN-Normal.ttf");
+}
+
+body{
+  font-family: '思源黑体简化';
+}
