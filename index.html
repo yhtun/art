@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, height=100%">
+	<link rel="icon" href="./img/ico.jpg">
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<title>西安美术馆预约</title>
+	<script src="./js/jquery-latest.min.js"></script>
+</head>
+
+<body style="height: 100%; width:100%; margin: 0;">
+	<div style="width: 100%; height: 100%; background-image: linear-gradient(to bottom right, rgb(118, 76, 163), rgb(92, 103, 211)); display:inline-block; color: white;">
+	<div style="text-align: center; font-size: 1.5rem; padding: 2rem;">西安美术馆预约</div>
+	<!-- 设置预约信息 -->
+	<div style="line-height: 2rem; font-size: 1.1rem; padding: 1rem; background-image: linear-gradient(to bottom right, rgb(114, 135, 254), rgb(130, 88, 186)); width: 80%; margin-left: 5%; border-radius: 10px;">
+		预约日期：<input type="date" id="pre_date" value="2023-04-20"><br>
+		预约时段：<select id="pre_time">
+			<option>第一时段 10:00 - 12:00</option>
+			<option>第二时段 12:01 - 14:00</option>
+			<option>第三时段 14:01 - 16:00</option>
+			<option>第四时段 16:01 - 17:00</option>
+			<option>第五时段 17:01 - 18:00</option>
+			<option>第六时段 18:01 - 19:00</option>
+			<option>第七时段 19:01 - 20:00</option>
+			<option>第八时段 20:01 - 21:30</option>
+		</select><br>
+		预约人数：<select id="pre_person">
+			<option>1</option>
+			<option selected>2</option>
+			<option>3</option>
+		</select><br>
+		预约编号：<input type="text" id="pre_No" value="">
+	</div>
+
+	<!-- 确定按钮 -->
+	<div style="text-align: center; margin: 2rem; background-image: linear-gradient(to bottom right, rgb(114, 135, 254), rgb(130, 88, 186)); width: 40%; line-height: 2rem; border-radius: 0.3rem; margin-left:30%" onclick="confirm()">确定</div>
+
+
+	<!-- 设置历史预约信息 -->
+	<div style="line-height: 2rem; font-size: 1rem; padding: 1rem; background-color: #F0F0F0; opacity: 0.4; color: black; width: 80%; margin-left: 5%; border-radius: 10px;">
+		历史预约信息：<br>
+		日期：<input type="date" id="passed_date" value="2023-02-25"><br>
+		时段：<select id="passed_time">
+			<option>第一时段 10:00 - 12:00</option>
+			<option>第二时段 12:01 - 14:00</option>
+			<option selected>第三时段 14:01 - 16:00</option>
+			<option>第四时段 16:01 - 17:00</option>
+			<option>第五时段 17:01 - 18:00</option>
+			<option>第六时段 18:01 - 19:00</option>
+			<option>第七时段 19:01 - 20:00</option>
+			<option>第八时段 20:01 - 21:30</option>
+		</select><br>
+		人数：<select id="passed_person">
+			<option>1</option>
+			<option selected>2</option>
+			<option>3</option>
+		</select><br>
+		编号：<input type="text" id="passed_No" value="1636953601731518464">
+	</div>
+</div>
+
+	<script type="text/javascript">
+		// <!-- 预约日期更新为当前时间 -->
+		var d = new Date();
+		document.getElementById("pre_date").value = d.getFullYear() +"-" +("0"+(d.getMonth() + 1)).slice(-2) +"-"+("0"+d.getDate()).slice(-2);
+		document.getElementById("pre_No").value =d.getTime()+""+Math.round(Math.random()*1000000);	//随机产生预约编号
+
+
+		//确定按钮函数
+		function confirm() {
+			//预约信息
+			pre_date = document.getElementById('pre_date').value;
+			pre_dates = getPreMonth(pre_date);						//预约月份起止日期
+			pre_date = pre_date.replace("-",".").replace("-",".");	//预约日期格式2023-03-21转换为2023.03.21
+			pre_time = document.getElementById('pre_time').value;	//预约时间段
+			pre_No = document.getElementById('pre_No').value;		//预约编号
+			pre_person = document.getElementById('pre_person').value;//预约人数
+
+
+			//历史信息
+			passed_date = document.getElementById('passed_date').value;
+			passed_dates = getPreMonth(passed_date);						//月份起止日期
+			passed_date = passed_date.replace("-",".").replace("-",".");	//日期格式2023-03-21转换为2023.03.21
+			passed_time = document.getElementById('passed_time').value;	//时间段
+			passed_No = document.getElementById('passed_No').value;		//编号
+			passed_person = document.getElementById('passed_person').value;//人数
+
+			//确定后跳转新页面
+			window.location.href='./art.html?pre_date='+pre_date+'&pre_dates='+pre_dates+'&pre_time='+pre_time+'&pre_No='+pre_No+'&pre_person='+pre_person+'&passed_date='+passed_date+'&passed_dates='+passed_dates+'&passed_time='+passed_time+'&passed_No='+passed_No+'&passed_person='+passed_person;
+			// window.open('./art.html?pre_date='+pre_date+'&pre_dates='+pre_dates+'&pre_time='+pre_time+'&pre_No='+pre_No+'&pre_person='+pre_person+'&passed_date='+passed_date+'&passed_dates='+passed_dates+'&passed_time='+passed_time+'&passed_No='+passed_No+'&passed_person='+passed_person);
+		}
+
+
+
+		//根据年月获取月份起止日期
+		function getPreMonth (this_date) {
+			this_year = (new Date(this_date)).getFullYear();
+			this_month = (new Date(this_date)).getMonth()+1;
+			tianshu = 32 - new Date(this_year, this_month-1, 32).getDate();
+			return this_year+'.'+this_month+'.1-'+this_month+'.'+tianshu;
+		}
+
+
+
+	</script>
+
+</body>
+</html>
